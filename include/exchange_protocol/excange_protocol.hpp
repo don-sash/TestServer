@@ -63,8 +63,9 @@ namespace exchange
 
         void serialize(std::vector<uint8_t> &result) const override final
         {
+            size_t offset = result.size();
             result.resize(result.size() + sizeof(PackClass));
-            memcpy(result.data(), &data, sizeof(PackClass));
+            memcpy(result.data() + offset, &data, sizeof(PackClass));
         }
 
         void deserialize(const std::vector<uint8_t> &source) override final
