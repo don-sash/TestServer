@@ -65,7 +65,7 @@ public:
 
 	void Run(uint32_t threadsCount = 10)
 	{		
-		// Create a pool of threads to run all of the io_contexts.
+		// Создаём пул потоков для io_context. Потоки будут назначаться для выполнения асинхронных операций
   		std::vector<std::shared_ptr<std::thread> > threads;
   		for (std::size_t i = 0; i < threadsCount; ++i)
   		{
@@ -75,7 +75,7 @@ public:
 			//std::cout << "io_context_ thread_id: " << thread->get_id() << std::endl;
   		}
 
-  		// Wait for all threads in the pool to exit.
+  		// Ожидаем завершение всех потоков io_context
   		for (std::size_t i = 0; i < threads.size(); ++i)
     		threads[i]->join();
 	}
