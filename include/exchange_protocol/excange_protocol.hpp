@@ -185,13 +185,13 @@ namespace exchange
 
         void serialize(std::vector<uint8_t> &result) const override final
         {
-            result.resize(data.path.size());
-            memcpy(result.data(), data.path.data(), data.path.size());
+            size_t offset = result.size();
+            result.resize(result.size() + getSerializedLenth());
+            memcpy(result.data() + offset, data.path.data(), data.path.size());
         }
 
         void deserialize(const std::vector<uint8_t> &source) override final
         {
-            size_t offset = 0;
             data.path.resize(source.size());
             memcpy(data.path.data(), source.data() , source.size());
         }
