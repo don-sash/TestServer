@@ -19,8 +19,9 @@ namespace exchange
         error = 0xFF
     };
 
-#pragma pack(push, 1)
+    //-------------------------------------------------------------
     // Базовые структуры добавлять сюда, под выравнивание
+    #pragma pack(push, 1)    
 
     struct HeaderData
     {
@@ -28,7 +29,20 @@ namespace exchange
         uint32_t dataLenth;
     };           
 
-#pragma pack(pop)
+    // Файловая информация
+    struct FileInfo
+    {
+        FileInfo() = default;
+        FileInfo(FileType _type, uint32_t _size, const std::string &_name)
+            : type(_type), size(_size), name(_name) {}
+
+        FileType    type = FileType::dir;
+        uint32_t    size = 0;
+        std::string name = "";
+    };
+
+    #pragma pack(pop)
+    //-------------------------------------------------------------
 
     // Шаблон для простых структур
     // TODO: добавить проверку на тривиальность типа
@@ -61,18 +75,6 @@ namespace exchange
         PackClass data;
     };
 
-    // Файловая информация
-    struct FileInfo
-    {
-        FileInfo() = default;
-        FileInfo(FileType _type, uint32_t _size, const std::string &_name)
-            : type(_type), size(_size), name(_name) {}
-
-        FileType    type = FileType::dir;
-        uint32_t    size = 0;
-        std::string name = "";
-    };
-
     // Уточняющий шаблон для сериализации информации о файлах
     template <uint32_t PackType>
     struct SerializableData<PackType, std::vector<FileInfo> /*, std::enable_if_t<std::true_type::value>*/> : public ISerializableData
@@ -100,6 +102,11 @@ namespace exchange
             return resLenth;
         }
 
+        /**
+        * Сериализация в вектор.
+        * @param Вектор может быть не пустым. Добавляем данные в конец.
+        *        Удобно для формирования пакета <header> + <data>     
+        */
         void serialize(std::vector<uint8_t> &result) const override final
         {
             size_t offset = result.size();
