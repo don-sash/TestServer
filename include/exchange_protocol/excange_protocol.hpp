@@ -76,6 +76,8 @@ namespace exchange
         PackClass data;
     };
 
+    using HeadPack = SerializableData<exchange::HEADER_MSG_TYPE, exchange::HeaderData>;
+
     // Уточняющий шаблон для сериализации информации о файлах
     template <uint32_t PackType>
     struct SerializableData<PackType, std::vector<FileInfo> /*, std::enable_if_t<std::true_type::value>*/> : public ISerializableData
@@ -160,6 +162,8 @@ namespace exchange
         std::vector<FileInfo> data;
     };
 
+    using FileInfoPack = SerializableData<exchange::FILE_INFO_RESPONSE, std::vector<exchange::FileInfo>>;
+
     
     struct PathRequest
     {
@@ -199,5 +203,6 @@ namespace exchange
 
         PathRequest data;
     };
+    using PathRequestPack = SerializableData<exchange::FILE_INFO_REQUEST,  exchange::PathRequest>;
 
 }
