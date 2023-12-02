@@ -42,8 +42,8 @@ int main(int argc, char *argv[])
     }
 
     exchange::HeaderData header;
-    exchange::SerializableData<exchange::FILE_INFO_REQUEST,  exchange::PathRequest> packRequest;
-    exchange::SerializableData<exchange::FILE_INFO_RESPONSE, std::vector<exchange::FileInfo>> packResponse;    
+    exchange::PathRequestPack packRequest;
+    exchange::FileInfoPack packResponse;    
 
     std::vector<uint8_t> requestBuf;
     std::vector<uint8_t> responseBuf;
