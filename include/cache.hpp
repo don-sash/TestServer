@@ -79,9 +79,9 @@ namespace cache
         void clearOldCache()
         {
             std::lock_guard<std::mutex> lock(mutex);
+            const auto now = std::chrono::system_clock::now();
             for (auto it = dataMap.begin(); it != dataMap.end();)
-            {
-                const auto now = std::chrono::system_clock::now();
+            {                
                 if ((now - it->second.lastTimeWrite) > maxLifeTime)
                     it = dataMap.erase(it);
                 else
