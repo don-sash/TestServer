@@ -49,9 +49,9 @@ void Connection::doReadBody(std::shared_ptr<exchange::HeaderData> headerPtr)
 
                                  auto response = std::make_shared<std::vector<uint8_t>>();
 
-                                 exchange::SerializableData<exchange::FILE_INFO_RESPONSE, std::vector<exchange::FileInfo>> packResponse(std::move(dirInfoVec));
-                                 exchange::SerializableData<exchange::HEADER_MSG_TYPE, exchange::HeaderData> packHead;
-                                 packHead.data.datType = packResponse.type();
+                                 exchange::FileInfoPack packResponse(std::move(dirInfoVec));
+                                 exchange::HeadPack packHead;
+                                 packHead.data.datType   = packResponse.type();
                                  packHead.data.dataLenth = packResponse.getSerializedLenth();
                                  packHead.serialize(*response);
                                  packResponse.serialize(*response);
