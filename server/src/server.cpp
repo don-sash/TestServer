@@ -36,11 +36,10 @@ void Connection::doReadBody(std::shared_ptr<exchange::HeaderData> headerPtr)
                              {
                              case exchange::FILE_INFO_REQUEST:
                              {
-                                 exchange::SerializableData<exchange::FILE_INFO_REQUEST, exchange::PathRequest> pack;
+                                 exchange::PathRequestPack pack;
                                  pack.deserialize(*packageDataPtr);
 
                                  std::vector<exchange::FileInfo> dirInfoVec;
-
                                  if (!cache->getValue(pack.data.path, dirInfoVec))
                                  {
                                      dirInfoVec = FileUtils::getDirInfo(pack.data.path);
